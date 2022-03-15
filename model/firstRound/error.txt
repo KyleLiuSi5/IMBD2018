@@ -1,0 +1,53 @@
+Epoch 1/50
+---------------------------------------------------------------------------
+ResourceExhaustedError                    Traceback (most recent call last)
+<ipython-input-5-bf5f2f974f79> in <module>()
+----> 1 history_fit = model.fit(training_set_x, training_set_y, batch_size=training_set_x.shape[0], epochs=50)
+
+~\AppData\Local\conda\conda\envs\tensorflow-gpu\lib\site-packages\keras\engine\training.py in fit(self, x, y, batch_size, epochs, verbose, callbacks, validation_split, validation_data, shuffle, class_weight, sample_weight, initial_epoch, steps_per_epoch, validation_steps, **kwargs)
+   1035                                         initial_epoch=initial_epoch,
+   1036                                         steps_per_epoch=steps_per_epoch,
+-> 1037                                         validation_steps=validation_steps)
+   1038 
+   1039     def evaluate(self, x=None, y=None,
+
+~\AppData\Local\conda\conda\envs\tensorflow-gpu\lib\site-packages\keras\engine\training_arrays.py in fit_loop(model, f, ins, out_labels, batch_size, epochs, verbose, callbacks, val_f, val_ins, shuffle, callback_metrics, initial_epoch, steps_per_epoch, validation_steps)
+    197                     ins_batch[i] = ins_batch[i].toarray()
+    198 
+--> 199                 outs = f(ins_batch)
+    200                 outs = to_list(outs)
+    201                 for l, o in zip(out_labels, outs):
+
+~\AppData\Local\conda\conda\envs\tensorflow-gpu\lib\site-packages\keras\backend\tensorflow_backend.py in __call__(self, inputs)
+   2664                 return self._legacy_call(inputs)
+   2665 
+-> 2666             return self._call(inputs)
+   2667         else:
+   2668             if py_any(is_tensor(x) for x in inputs):
+
+~\AppData\Local\conda\conda\envs\tensorflow-gpu\lib\site-packages\keras\backend\tensorflow_backend.py in _call(self, inputs)
+   2634                                 symbol_vals,
+   2635                                 session)
+-> 2636         fetched = self._callable_fn(*array_vals)
+   2637         return fetched[:len(self.outputs)]
+   2638 
+
+~\AppData\Local\conda\conda\envs\tensorflow-gpu\lib\site-packages\tensorflow\python\client\session.py in __call__(self, *args, **kwargs)
+   1380           ret = tf_session.TF_SessionRunCallable(
+   1381               self._session._session, self._handle, args, status,
+-> 1382               run_metadata_ptr)
+   1383         if run_metadata:
+   1384           proto_data = tf_session.TF_GetBuffer(run_metadata_ptr)
+
+~\AppData\Local\conda\conda\envs\tensorflow-gpu\lib\site-packages\tensorflow\python\framework\errors_impl.py in __exit__(self, type_arg, value_arg, traceback_arg)
+    517             None, None,
+    518             compat.as_text(c_api.TF_Message(self.status.status)),
+--> 519             c_api.TF_GetCode(self.status.status))
+    520     # Delete the underlying status object from memory otherwise it stays alive
+    521     # as there is a reference to status from this from the traceback due to
+
+ResourceExhaustedError: OOM when allocating tensor with shape[30000,4096] and type float on /job:localhost/replica:0/task:0/device:GPU:0 by allocator GPU_0_bfc
+	 [[Node: training/Adam/mul_13 = Mul[T=DT_FLOAT, _device="/job:localhost/replica:0/task:0/device:GPU:0"](Adam/beta_2/read, training/Adam/Variable_42/read)]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.
+
+
